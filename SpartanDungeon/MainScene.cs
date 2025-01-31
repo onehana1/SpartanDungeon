@@ -6,14 +6,22 @@ namespace SpartanDungeon
     internal class MainScene
     {
 
-        enum Job
+        public enum Job
         {
-            Warrior,
+            Warrior = 1,
             Archer,
             Magician
         }
 
-        enum MenuOption
+        private static readonly Dictionary<Job, string> JobDescriptions = new Dictionary<Job, string>
+        {
+            { Job.Warrior, "전사" },
+            { Job.Archer, "궁수" },
+            { Job.Magician, "마법사" }
+        };
+
+
+        public enum MenuOption
         {
             Status = 1,
             Inventory,
@@ -32,89 +40,147 @@ namespace SpartanDungeon
         public class Player
         {
             public string name { get; set; }
+            public Job job { get; set; }
             public int level { get; set; } = 1;
-            
+            public int offensive { get; set; } = 0;
+            public int defensive { get; set; } = 0;
+
+            public int maxHp { get; set; } = 100;
+            public int curHp { get; set; }
+
+            public int gold { get; set; } = 0;
+
+            public Player()
+            {
+                curHp = maxHp;
+            }
+
         }
 
-        public class MainMenu
+        public class SettingPlayer
         {
             private Player player;
-
-            public MainMenu(Player player)
+            public SettingPlayer(Player player)
             {
                 this.player = player;
             }
 
-            public void ShowMenu()
+            public void SetPlayerName()
+            {
+                Console.WriteLine("원하시는 이름을 설정해주세요.\n");
+                player.name = Console.ReadLine();
+            }
+
+            public void SetPlayerJob()
             {
                 while (true)
                 {
-                    foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
+                    Console.WriteLine("원하시는 직업을 골라주세요.\n");
+
+                    foreach (Job option in Enum.GetValues(typeof(Job)))
                     {
-                        Console.WriteLine($"{(int)option}. {MenuDescriptions[option]}");
+                        Console.WriteLine($"{(int)option}. {JobDescriptions[option]}");
                     }
+                    Console.Write("\n선택: ");
 
-                    Console.Write("\n원하시는 행동을 입력해주세요: ");
-                    if (int.TryParse(Console.ReadLine(), out int input) && Enum.IsDefined(typeof(MenuOption), input))
+                    if (int.TryParse(Console.ReadLine(), out int input) && Enum.IsDefined(typeof(Job), input))
                     {
-                        MenuOption choice = (MenuOption)input;
+                        Job choice = (Job)input;
+                        Console.WriteLine($"{JobDescriptions[choice]}을 선택하셨습니다.");
+                        player.job = choice;
+                        break; 
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 입력입니다. 다시 선택해주세요.");
+                    }
+                }
+        }
 
 
-                        switch (choice)
+            public class MainMenu
+            {
+                private Player player;
+
+                public MainMenu(Player player)
+                {
+                    this.player = player;
+                }
+
+                public void ShowMenu()
+                {
+                    while (true)
+                    {
+                        foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
                         {
-                            case MenuOption.Status:
-                                ShowStatus();
-                                break;
-                            case MenuOption.Inventory:
-                                ShowInventory();
-                                break;
-                            case MenuOption.Shop:
-                                ShowShop();
-                                break;
-                            case MenuOption.Exit:
-                                Console.WriteLine("게임을 종료합니다.");
-                                return;
+                            Console.WriteLine($"{(int)option}. {MenuDescriptions[option]}");
+                        }
+
+                        Console.Write("\n원하시는 행동을 입력해주세요: ");
+                        if (int.TryParse(Console.ReadLine(), out int input) && Enum.IsDefined(typeof(MenuOption), input))
+                        {
+                            MenuOption choice = (MenuOption)input;
+
+
+                            switch (choice)
+                            {
+                                case MenuOption.Status:
+                                    ShowStatus();
+                                    break;
+                                case MenuOption.Inventory:
+                                    ShowInventory();
+                                    break;
+                                case MenuOption.Shop:
+                                    ShowShop();
+                                    break;
+                                case MenuOption.Exit:
+                                    Console.WriteLine("게임을 종료합니다.");
+                                    return;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("잘못된 입력입니다.");
                         }
                     }
                 }
+
+                private void ShowStatus()
+                {
+                    Console.WriteLine($"\n[상태 보기]\n이름: {player.name}\n레벨: {player.level}\n");
+                }
+
+                private void ShowInventory()
+                {
+                    Console.WriteLine("\n[인벤토리]\n현재 아이템이 없습니다.\n");
+                }
+
+                private void ShowShop()
+                {
+                    Console.WriteLine("\n[상점]\n아직 상점이 준비되지 않았습니다.\n");
+                }
             }
 
-            private void ShowStatus()
+            static void Main(string[] args)
             {
-                Console.WriteLine($"\n[상태 보기]\n이름: {player.name}\n레벨: {player.level}\n");
+                var player = new Player();
+                var setP = new SettingPlayer(player);
+                var menu = new MainMenu(player);
+
+
+                Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
+                setP.SetPlayerName();  // 이름 세팅  
+                Console.WriteLine($"{player.name}님 이시군요! 반갑습니다.\n");
+
+                setP.SetPlayerJob();    // 직업 세팅
+
+                Console.WriteLine($"스파르타 마을에 오신 {player.name}님을 환영합니다.");
+                Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
+
+                menu.ShowMenu();
+
             }
-
-            private void ShowInventory()
-            {
-                Console.WriteLine("\n[인벤토리]\n현재 아이템이 없습니다.\n");
-            }
-
-            private void ShowShop()
-            {
-                Console.WriteLine("\n[상점]\n아직 상점이 준비되지 않았습니다.\n");
-            }
-        }
-
-        static void Main(string[] args)
-        {
-            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
-            Console.WriteLine("원하시는 이름을 설정해주세요.\n");
-
-            var player = new Player();
-
-            player.name = Console.ReadLine();
-
-            Console.WriteLine($"{player.name}님 이시군요! 반갑습니다.\n");
-
-
-            Console.WriteLine($"스파르타 마을에 오신 {player.name}님을 환영합니다.");
-            Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
-            var menu = new MainMenu(player);
-            menu.ShowMenu();
-
-
-
-
         }
     }
 }
+
