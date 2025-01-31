@@ -62,7 +62,7 @@ namespace SpartanDungeon
 
         private void ShowInventory()
         {
-            player.ShowInventory();
+            player.inventory.ShowInventory();
         }
 
         private void ShowShop()
