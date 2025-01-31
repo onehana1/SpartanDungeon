@@ -5,38 +5,6 @@ namespace SpartanDungeon
 
     internal class MainScene
     {
-
-        public enum Job
-        {
-            Warrior = 1,
-            Archer,
-            Magician
-        }
-
-        private static readonly Dictionary<Job, string> JobDescriptions = new Dictionary<Job, string>
-        {
-            { Job.Warrior, "전사" },
-            { Job.Archer, "궁수" },
-            { Job.Magician, "마법사" }
-        };
-
-
-        public enum MenuOption
-        {
-            Status = 1,
-            Inventory,
-            Shop,
-            Exit
-        }
-
-        private static readonly Dictionary<MenuOption, string> MenuDescriptions = new Dictionary<MenuOption, string>
-        {
-            { MenuOption.Status, "상태 보기" },
-            { MenuOption.Inventory, "인벤토리" },
-            { MenuOption.Shop, "상점" },
-            { MenuOption.Exit, "게임 종료" }
-        };
-
         public class Player
         {
             public string name { get; set; }
@@ -79,14 +47,14 @@ namespace SpartanDungeon
 
                     foreach (Job option in Enum.GetValues(typeof(Job)))
                     {
-                        Console.WriteLine($"{(int)option}. {JobDescriptions[option]}");
+                        Console.WriteLine($"{(int)option}. {GameData.JobDescriptions[option]}");
                     }
                     Console.Write("\n선택: ");
 
                     if (int.TryParse(Console.ReadLine(), out int input) && Enum.IsDefined(typeof(Job), input))
                     {
                         Job choice = (Job)input;
-                        Console.WriteLine($"{JobDescriptions[choice]}을 선택하셨습니다.");
+                        Console.WriteLine($"{GameData.JobDescriptions[choice]}을(를) 선택하셨습니다.");
                         player.job = choice;
                         break; 
                     }
@@ -113,7 +81,7 @@ namespace SpartanDungeon
                     {
                         foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
                         {
-                            Console.WriteLine($"{(int)option}. {MenuDescriptions[option]}");
+                            Console.WriteLine($"{(int)option}. {GameData.MenuDescriptions[option]}");
                         }
 
                         Console.Write("\n원하시는 행동을 입력해주세요: ");
@@ -147,7 +115,9 @@ namespace SpartanDungeon
 
                 private void ShowStatus()
                 {
-                    Console.WriteLine($"\n[상태 보기]\n이름: {player.name}\n레벨: {player.level}\n");
+                    Console.WriteLine($"\n[상태 보기]\n이름: {player.name}  ({GameData.JobDescriptions[player.job]})\n레벨: {player.level}\n" +
+                        $"공격력: {player.offensive}\n방어력: {player.defensive}\n체력: {player.curHp} / {player.maxHp}\n" +
+                        $"골드: {player.gold} G");
                 }
 
                 private void ShowInventory()
@@ -172,7 +142,7 @@ namespace SpartanDungeon
                 setP.SetPlayerName();  // 이름 세팅  
                 Console.WriteLine($"{player.name}님 이시군요! 반갑습니다.\n");
 
-                setP.SetPlayerJob();    // 직업 세팅
+                setP.SetPlayerJob();   // 직업 세팅
 
                 Console.WriteLine($"스파르타 마을에 오신 {player.name}님을 환영합니다.");
                 Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
