@@ -20,6 +20,24 @@ namespace SpartanDungeon
         Exit
     }
 
+    public enum Equipments
+    {
+        Top = 1,
+        Bottoms,
+        Shoes,
+        Gloves,
+        Weapon,
+
+        LAST
+    }
+
+    public enum Items
+    {
+        ManaPotion = Equipments.LAST,
+        HpPotion
+    }
+
+
     public static class GameData
     {
 
@@ -38,6 +56,23 @@ namespace SpartanDungeon
             { MenuOption.Shop, "상점" },
             { MenuOption.Exit, "게임 종료" }
         };
+
+
+        public static readonly Dictionary<Equipments, Item> EquipmentItems = new Dictionary<Equipments, Item>
+        {
+            { Equipments.Top, new Item((int)Equipments.Top, "갑옷", true) },
+            { Equipments.Bottoms, new Item((int)Equipments.Bottoms, "바지", true) },
+            { Equipments.Shoes, new Item((int)Equipments.Shoes, "신발", true) },
+            { Equipments.Gloves, new Item((int)Equipments.Gloves, "장갑", true) },
+            { Equipments.Weapon, new Item((int)Equipments.Weapon, "검", true) }
+        };
+
+        public static readonly Dictionary<Items, Item> ConsumableItems = new Dictionary<Items, Item>
+        {
+            { Items.ManaPotion, new Item((int)Items.ManaPotion, "마나 포션", false) },
+            { Items.HpPotion, new Item((int)Items.HpPotion, "체력 포션", false) }
+        };
+
 
     }
 }

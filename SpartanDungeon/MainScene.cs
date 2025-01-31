@@ -22,7 +22,13 @@ namespace SpartanDungeon
             Console.WriteLine($"스파르타 마을에 오신 {player.name}님을 환영합니다.");
             Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
 
+            player.AddItem(GameData.EquipmentItems[Equipments.Weapon]); // 검 추가
+            player.AddItem(GameData.ConsumableItems[Items.HpPotion]); // 체력 포션 추가
+
+            player.ShowInventory();
+
             menu.ShowMenu();
+
 
         }
     }

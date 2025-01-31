@@ -62,7 +62,7 @@ namespace SpartanDungeon
 
         private void ShowInventory()
         {
-            Console.WriteLine("\n[인벤토리]\n현재 아이템이 없습니다.\n");
+            player.ShowInventory();
         }
 
         private void ShowShop()
