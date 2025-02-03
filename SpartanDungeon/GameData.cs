@@ -21,6 +21,13 @@ namespace SpartanDungeon
         LeaveGame
     }
 
+    public enum InventoryMenuOption
+    {
+        ExitMenu = 0,
+        ManageEquipment
+
+    }
+
     public enum Equipments
     {
         Top = 1,

@@ -37,7 +37,7 @@ namespace SpartanDungeon
                             ShowStatus();
                             break;
                         case MenuOption.Inventory:
-                            ShowInventory();
+                            ShowInventoryMenu();
                             break;
                         case MenuOption.Shop:
                             ShowShop();
@@ -79,12 +79,53 @@ namespace SpartanDungeon
             CloseMenu();
         }
 
-        private void ShowInventory()
+        private void ShowInventoryMenu()
         {
-            player.inventory.ShowInventory();
+            while (true)
+            {
+                Console.WriteLine("\n인벤토리\n보유 중인 아이템을 관리할 수 있습니다.");
+                player.inventory.ShowInventory(); // 현재 인벤토리 출력
 
-            CloseMenu();
+                Console.WriteLine("\n1. 장착 관리");
+                Console.WriteLine("0. 나가기");
+                Console.Write("\n원하시는 행동을 입력해주세요: ");
+
+                if (int.TryParse(Console.ReadLine(), out int input))
+                {
+                    InventoryMenuOption choice = (InventoryMenuOption)input; 
+
+                    if (choice == InventoryMenuOption.ExitMenu) return; 
+                    if (choice == InventoryMenuOption.ManageEquipment) ManageEquipment();
+                    else Console.WriteLine("잘못된 입력입니다.");
+                }
+
+            }
         }
+
+        private void ManageEquipment()
+        {
+            while (true)
+            {
+                Console.WriteLine("\n[장착 관리]\n보유 중인 아이템을 관리할 수 있습니다.");
+                player.inventory.ShowInventoryWithNumbers(); // 번호가 포함된 인벤토리 출력
+
+                Console.WriteLine("\n0. 나가기");
+                Console.Write("\n장착/해제할 아이템 번호를 입력해주세요: ");
+
+                if (int.TryParse(Console.ReadLine(), out int input))
+                {
+                    if (input == 0) return; // 0을 입력하면 장착 관리 종료
+
+                    bool success = player.inventory.ToggleEquipItem(input); // 장착/해제
+                    if (!success) Console.WriteLine("잘못된 입력입니다."); 
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                }
+            }
+        }
+
 
         private void ShowShop()
         {

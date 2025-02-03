@@ -23,6 +23,8 @@ namespace SpartanDungeon
             Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
 
             player.inventory.AddItem(GameData.EquipmentItems[Equipments.Weapon]); // 검 추가
+            player.inventory.AddItem(GameData.EquipmentItems[Equipments.Gloves]); // 검 추가
+
             player.inventory.AddItem(GameData.ConsumableItems[Items.HpPotion]); // 체력 포션 추가
             menu.ShowMenu();
 

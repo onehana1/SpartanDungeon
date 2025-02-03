@@ -12,11 +12,19 @@ namespace SpartanDungeon
         public string name { get; private set; }
         public bool isEquipment { get; private set; }
 
+        public int offensive { get; set; } = 0;
+        public int defensive { get; set; } = 0;
+
+        public string description { get; private set; }
+
         public Item(int id, string name, bool isEquipment)
         {
-            this.id = id;
+            this.id = id;   //일단 부위
             this.name = name;
             this.isEquipment = isEquipment;
+            this.offensive = offensive;
+            this.defensive = defensive;
+            this.description = description;
         }
 
         public override string ToString()   // 이름을 리스트로 출력
