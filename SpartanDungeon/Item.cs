@@ -19,7 +19,9 @@ namespace SpartanDungeon
 
         public string description { get; private set; }
 
-        public Item(int id, int part, string name, bool isEquipment, int offensive,int defensive, string description)
+        public int price {  get; private set; }
+
+        public Item(int id, int part, string name, bool isEquipment, int offensive,int defensive, string description, int price)
         {
             this.id = id;
             this.part = part;
@@ -28,6 +30,7 @@ namespace SpartanDungeon
             this.offensive = offensive;
             this.defensive = defensive;
             this.description = description;
+            this.price = price;
         }
 
         public override string ToString()   // 이름을 리스트로 출력

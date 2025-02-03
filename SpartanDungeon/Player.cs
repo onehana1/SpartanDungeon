@@ -17,13 +17,13 @@ namespace SpartanDungeon
         public int baseOffensive { get; private set; } = 10; 
         public int baseDefensive { get; private set; } = 10;  
 
-        public int offensive { get; set; } = 0;
-        public int defensive { get; set; } = 0;
+        public int plusOffensive { get; set; } = 0;
+        public int plusDefensive { get; set; } = 0;
 
         public int maxHp { get; set; } = 100;
         public int curHp { get; set; }
 
-        public int gold { get; set; } = 0;
+        public int gold { get; set; } = 10000;
 
         public Inventory inventory { get; private set; }
 
@@ -57,7 +57,7 @@ namespace SpartanDungeon
                 if (int.TryParse(Console.ReadLine(), out int input) && Enum.IsDefined(typeof(Job), input))
                 {
                     Job choice = (Job)input;
-                    Console.WriteLine($"\n{GameData.JobDescriptions[choice]}을(를) 선택하셨습니다.");
+                    
                     this.job = choice;
                     break;
                 }
@@ -73,33 +73,45 @@ namespace SpartanDungeon
             if (!item.isEquipment) return; // 장비가 아니면 무시
 
             int equipmentId = item.id;
+            int equipmentPart = item.part;
 
-            if (inventory.equippedItems.ContainsKey(equipmentId))
+            // 같은 아이템을 다시 선택하면 해제
+            if (inventory.equippedItems.ContainsKey(equipmentPart) && inventory.equippedItems[equipmentPart] == item)
             {
-                Console.WriteLine($"{inventory.equippedItems[equipmentId].name}을(를) 장착 해제했습니다.");
-                inventory.equippedItems.Remove(equipmentId);
+                Console.WriteLine($"{inventory.equippedItems[equipmentPart].name}을(를) 장착 해제했습니다.");
+                inventory.equippedItems.Remove(equipmentPart);
             }
             else
             {
-                inventory.equippedItems[equipmentId] = item;
-                Console.WriteLine($"{item.name}을(를) 장착했습니다!");
+                // 기존 장비 해제 후 새로운 장비 장착
+                if (inventory.equippedItems.ContainsKey(equipmentPart))
+                {
+                    Console.WriteLine($"{inventory.equippedItems[equipmentPart].name}을(를) 해제하고 {item.name}을(를) 장착했습니다.");
+                    inventory.equippedItems.Remove(equipmentPart);
+                }
+                else
+                {
+                    Console.WriteLine($"{item.name}을(를) 장착했습니다");
+                }
+
+                inventory.equippedItems[equipmentPart] = item; // 장비 장착
             }
 
-            UpdateStats();
+            UpdateStats(); // 스탯 업데이트
         }
 
         private void UpdateStats()
         {
-            offensive = baseOffensive;
-            defensive = baseDefensive;
-
+            plusOffensive = 0;
+            plusDefensive = 0;
             foreach (var item in inventory.equippedItems.Values)
             {
-                offensive += item.offensive;
-                defensive += item.defensive;
+                plusOffensive += item.offensive;
+                plusDefensive += item.defensive;
             }
 
-            Console.WriteLine($"[스탯 업데이트] 공격력: {offensive}, 방어력: {defensive}");
+            Console.WriteLine($"[스탯 업데이트] 공격력: {baseOffensive + plusOffensive} (+{plusOffensive}), " +
+                $"방어력: {baseDefensive + plusDefensive} (+{plusDefensive})");
         }
 
 

@@ -25,6 +25,13 @@ namespace SpartanDungeon
     {
         ExitMenu = 0,
         ManageEquipment
+    }
+
+    public enum StoreMenuOption
+    {
+        ExitMenu = 0,
+        BuyMenu,
+        SellMenu,
 
     }
 
@@ -90,14 +97,40 @@ namespace SpartanDungeon
         public static readonly List<Item> Items = new List<Item>
         { 
             // 장비 아이템
-            new Item((int)Equipment.OldArmor,(int)EquipmentType.Armor, "낡은 갑옷", true, 0, 5, "어쩌구 저쩌구 갑옷입니다."),
-            new Item((int)Equipment.OldShoes,(int)EquipmentType.Shoes, "낡은 신발", true, 0, 2, "어쩌구 저쩌구 신발입니다."),
-            new Item((int)Equipment.OldGloves,(int)EquipmentType.Gloves, "낡은 장갑", true, 1, 1, "어쩌구 저쩌구 장갑입니다."),
-            new Item((int)Equipment.OldSword,(int)EquipmentType.Weapon, "낡은 검", true, 5, 0, "어쩌구 저쩌구 검입니다."),
+            new Item((int)Equipment.OldArmor,(int)EquipmentType.Armor, "낡은 갑옷", true, 0, 5, "어쩌구 저쩌구 갑옷입니다.", 500),
+            new Item((int)Equipment.OldShoes,(int)EquipmentType.Shoes, "낡은 신발", true, 0, 2, "어쩌구 저쩌구 신발입니다.", 500),
+            new Item((int)Equipment.OldGloves,(int)EquipmentType.Gloves, "낡은 장갑", true, 1, 1, "어쩌구 저쩌구 장갑입니다.", 500),
+            new Item((int)Equipment.OldSword,(int)EquipmentType.Weapon, "낡은 검", true, 5, 0, "어쩌구 저쩌구 검입니다.", 500),
 
             // 소비 아이템
-            new Item((int)ConsumableItem.EasyManaPotion,(int)ConsumableItemType.ManaPotion, "그냥 마나 포션", false, 0, 0, "사용하면 마나를 50 회복합니다."),
-            new Item((int)ConsumableItem.EasyHpPotion,(int)ConsumableItemType.HpPotion, "그냥 체력 포션", false, 0, 0, "사용하면 체력을 50 회복합니다.")
+            new Item((int)ConsumableItem.EasyManaPotion,(int)ConsumableItemType.ManaPotion, "그냥 마나 포션", false, 0, 0, "사용하면 마나를 50 회복합니다.", 100),
+            new Item((int)ConsumableItem.EasyHpPotion,(int)ConsumableItemType.HpPotion, "그냥 체력 포션", false, 0, 0, "사용하면 체력을 50 회복합니다.", 100),
+
+
+              // 장비 아이템
+            new Item((int)Equipment.SpartaArmor,(int)EquipmentType.Armor, "스파르타 갑옷", true, 0, 15, "튼튼한 스파르타 갑옷입니다.", 1000),
+            new Item((int)Equipment.SpartaShoes,(int)EquipmentType.Shoes, "스파르타 신발", true, 0, 6, "가벼운 스파르타 신발입니다.", 1000),
+            new Item((int)Equipment.SpartaGloves,(int)EquipmentType.Gloves, "스파르타 장갑", true, 2, 2, "따뜻한 스파르타 장갑입니다.", 1000),
+            new Item((int)Equipment.SpartaSword,(int)EquipmentType.Weapon, "스파르타 도검", true, 15, 0, "강력한 스파르타 도검입니다.", 1000),
+
+            // 소비 아이템
+            new Item((int)ConsumableItem.GreatManaPotion,(int)ConsumableItemType.ManaPotion, "훌륭한 마나 포션", false, 0, 0, "사용하면 마나를 100 회복합니다.", 300),
+            new Item((int)ConsumableItem.GreatHpPotion,(int)ConsumableItemType.HpPotion, "훌륭한 체력 포션", false, 0, 0, "사용하면 체력을 100 회복합니다.", 300)
+
+        };
+
+
+        public static readonly List<Item> StoreItems = new List<Item>
+        { 
+            // 장비 아이템
+            new Item((int)Equipment.SpartaArmor,(int)EquipmentType.Armor, "스파르타 갑옷", true, 0, 15, "튼튼한 스파르타 갑옷입니다.", 1000),
+            new Item((int)Equipment.SpartaShoes,(int)EquipmentType.Shoes, "스파르타 신발", true, 0, 6, "가벼운 스파르타 신발입니다.", 1000),
+            new Item((int)Equipment.SpartaGloves,(int)EquipmentType.Gloves, "스파르타 장갑", true, 2, 2, "따뜻한 스파르타 장갑입니다.", 1000),
+            new Item((int)Equipment.SpartaSword,(int)EquipmentType.Weapon, "스파르타 도검", true, 15, 0, "강력한 스파르타 도검입니다.", 1000),
+
+            // 소비 아이템
+            new Item((int)ConsumableItem.GreatManaPotion,(int)ConsumableItemType.ManaPotion, "훌륭한 마나 포션", false, 0, 0, "사용하면 마나를 100 회복합니다.", 300),
+            new Item((int)ConsumableItem.GreatHpPotion,(int)ConsumableItemType.HpPotion, "훌륭한 체력 포션", false, 0, 0, "사용하면 체력을 100 회복합니다.", 300)
         };
 
 

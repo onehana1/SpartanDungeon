@@ -3,27 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace SpartanDungeon
 {
     public class MainMenu
     {
         private Player player;
-        public MainMenu(Player player)
+        private Store store;
+        public MainMenu(Player player, Store store)
         {
             this.player = player;
+            this.store = store;
         }
+
 
         public void ShowMenu()
         {
             while (true)
             {
+                Console.Clear();
                 foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
                 {
                     if (option == MenuOption.ExitMenu) continue;    // exitmenu 는 보여줄 필요없고 dic에도 안넣을거임
                     Console.WriteLine($"{(int)option}. {GameData.MenuDescriptions[option]}");
                 }
-
+                
                 Console.Write("\n원하시는 행동을 입력해주세요: ");
                 if (int.TryParse(Console.ReadLine(), out int input) && Enum.IsDefined(typeof(MenuOption), input))
                 {
@@ -33,17 +38,24 @@ namespace SpartanDungeon
                     switch (choice)
                     {
                         case MenuOption.Status:
+                            Console.Clear();
                             ShowStatus();
                             break;
                         case MenuOption.Inventory:
+                            Console.Clear();
                             ShowInventoryMenu();
                             break;
                         case MenuOption.Shop:
-                            ShowShop();
+                            Console.Clear();
+                            ShowStore();
                             break;
                         case MenuOption.LeaveGame:
-                            Console.WriteLine("게임을 종료합니다.");
+                            Console.Clear();
+                            Console.WriteLine("게임을 종료합니다.\n안녕!");
                             return;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다. 다시 선택하세요.");
+                            break;
                     }
                 }
                 else
@@ -72,7 +84,9 @@ namespace SpartanDungeon
         private void ShowStatus()
         {
             Console.WriteLine($"\n[상태 보기]\n이름: {player.name}  ({GameData.JobDescriptions[player.job]})\n레벨: {player.level}\n" +
-                $"공격력: {player.offensive}\n방어력: {player.defensive}\n체력: {player.curHp} / {player.maxHp}\n" +
+                $"공격력: {player.baseOffensive + player.plusOffensive} (+{player.plusOffensive}), " +
+                $"방어력: {player.baseDefensive + player.plusDefensive} (+{player.plusDefensive})" +
+                $"\n체력: {player.curHp} / {player.maxHp}\n" +
                 $"골드: {player.gold} G");
 
             CloseMenu();
@@ -126,11 +140,10 @@ namespace SpartanDungeon
         }
 
 
-        private void ShowShop()
+        private void ShowStore()
         {
-            Console.WriteLine("\n[상점]\n아직 상점이 준비되지 않았습니다.\n");
-
-            CloseMenu();
+            store.ShowStoreMenu();
+            // CloseMenu();
         }
     }
 }

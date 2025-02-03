@@ -41,7 +41,7 @@ namespace SpartanDungeon
                 {
                     string equippedMark = equippedItems != null && item != null && 
                                             equippedItems.ContainsValue(item) ? "[E]" : ""; // 장착된 아이템 표시
-                    Console.WriteLine($"- {item.name} {equippedMark} ({(item.isEquipment ? "장비" : "소모품")})"); //장비 또는 소모품 표시
+                    Console.WriteLine($"- {equippedMark} {item.name} ({(item.isEquipment ? "장비" : "소모품")})"); //장비 또는 소모품 표시
 
                 }
             }
@@ -68,8 +68,9 @@ namespace SpartanDungeon
                     Console.WriteLine(
                            $"{LetterSpacing(index.ToString(), 5)} " +
                            $"{LetterSpacing(equippedMark + item.name, 20)} | " +
-                           $"{LetterSpacing(stats, 25)} | " +
-                           $"{item.description}"
+                           $" {LetterSpacing(stats, 20)} | " +
+                           $" {LetterSpacing(item.description, 40)} |" +
+                           $" {item.price} G"
                        );
                     index++;
                 }
@@ -91,7 +92,7 @@ namespace SpartanDungeon
                     textWidth += 1;  // 나머지 1칸
             }
 
-            return text + new string(' ', width - textWidth);
+            return text + new string(' ', Math.Max(0, width - textWidth));
         }
 
 
