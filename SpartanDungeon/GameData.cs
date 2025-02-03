@@ -14,10 +14,11 @@ namespace SpartanDungeon
     }
     public enum MenuOption
     {
+        ExitMenu = 0,
         Status = 1,
         Inventory,
         Shop,
-        Exit
+        LeaveGame
     }
 
     public enum Equipments
@@ -54,7 +55,7 @@ namespace SpartanDungeon
             { MenuOption.Status, "상태 보기" },
             { MenuOption.Inventory, "인벤토리" },
             { MenuOption.Shop, "상점" },
-            { MenuOption.Exit, "게임 종료" }
+            { MenuOption.LeaveGame, "게임 종료" }
         };
 
 

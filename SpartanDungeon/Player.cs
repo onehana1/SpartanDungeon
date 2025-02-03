@@ -51,7 +51,7 @@ namespace SpartanDungeon
                 if (int.TryParse(Console.ReadLine(), out int input) && Enum.IsDefined(typeof(Job), input))
                 {
                     Job choice = (Job)input;
-                    Console.WriteLine($"{GameData.JobDescriptions[choice]}을(를) 선택하셨습니다.");
+                    Console.WriteLine($"\n{GameData.JobDescriptions[choice]}을(를) 선택하셨습니다.");
                     this.job = choice;
                     break;
                 }
