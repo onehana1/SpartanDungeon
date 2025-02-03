@@ -22,7 +22,7 @@ namespace SpartanDungeon
         {
             while (true)
             {
-                Console.Clear();
+                //Console.Clear();
                 foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
                 {
                     if (option == MenuOption.ExitMenu) continue;    // exitmenu 는 보여줄 필요없고 dic에도 안넣을거임
@@ -38,23 +38,23 @@ namespace SpartanDungeon
                     switch (choice)
                     {
                         case MenuOption.Status:
-                            Console.Clear();
-                            ShowStatus();
+                           // Console.Clear();
+                            //ShowStatus();
                             break;
                         case MenuOption.Inventory:
-                            Console.Clear();
+                            //Console.Clear();
                             ShowInventoryMenu();
                             break;
                         case MenuOption.Shop:
-                            Console.Clear();
+                           // Console.Clear();
                             ShowStore();
                             break;
                         case MenuOption.LeaveGame:
-                            Console.Clear();
+                           // Console.Clear();
                             Console.WriteLine("게임을 종료합니다.\n안녕!");
                             return;
                         default:
-                            Console.WriteLine("잘못된 입력입니다. 다시 선택하세요.");
+                           // Console.WriteLine("잘못된 입력입니다. 다시 선택하세요.");
                             break;
                     }
                 }
