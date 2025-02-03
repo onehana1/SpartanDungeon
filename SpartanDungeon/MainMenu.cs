@@ -9,7 +9,6 @@ namespace SpartanDungeon
     public class MainMenu
     {
         private Player player;
-
         public MainMenu(Player player)
         {
             this.player = player;

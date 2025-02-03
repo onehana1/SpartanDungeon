@@ -25,13 +25,13 @@ namespace SpartanDungeon
 
         public int gold { get; set; } = 0;
 
-        public Inventory inventory { get; private set; } = new Inventory();
-        public Dictionary<EquipmentType, Item> equippedItems = new Dictionary<EquipmentType, Item>(); // 장착된 아이템 저장
+        public Inventory inventory { get; private set; }
 
 
         public Player()
         {
             curHp = maxHp;
+            inventory = new Inventory(this);
         }
 
        
@@ -68,6 +68,39 @@ namespace SpartanDungeon
             }
         }
 
+        public void ToggleEquipItem(Item item)
+        {
+            if (!item.isEquipment) return; // 장비가 아니면 무시
+
+            int equipmentId = item.id;
+
+            if (inventory.equippedItems.ContainsKey(equipmentId))
+            {
+                Console.WriteLine($"{inventory.equippedItems[equipmentId].name}을(를) 장착 해제했습니다.");
+                inventory.equippedItems.Remove(equipmentId);
+            }
+            else
+            {
+                inventory.equippedItems[equipmentId] = item;
+                Console.WriteLine($"{item.name}을(를) 장착했습니다!");
+            }
+
+            UpdateStats();
+        }
+
+        private void UpdateStats()
+        {
+            offensive = baseOffensive;
+            defensive = baseDefensive;
+
+            foreach (var item in inventory.equippedItems.Values)
+            {
+                offensive += item.offensive;
+                defensive += item.defensive;
+            }
+
+            Console.WriteLine($"[스탯 업데이트] 공격력: {offensive}, 방어력: {defensive}");
+        }
 
 
     }

@@ -10,6 +10,7 @@ namespace SpartanDungeon
         static void Main(string[] args)
         {
             var player = new Player();
+
             var menu = new MainMenu(player);
 
 
@@ -23,13 +24,13 @@ namespace SpartanDungeon
             Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
 
 
-            player.inventory.AddItem((int)Equipment.OldArmor);  
+            player.inventory.AddItem((int)Equipment.OldArmor);
             player.inventory.AddItem((int)Equipment.OldSword);
             player.inventory.AddItem((int)Equipment.OldGloves);
             player.inventory.AddItem((int)Equipment.OldGloves);
 
 
-            player.inventory.AddItem((int)ConsumableItem.EasyHpPotion); 
+            player.inventory.AddItem((int)ConsumableItem.EasyHpPotion);
             player.inventory.AddItem((int)ConsumableItem.EasyManaPotion); 
 
             menu.ShowMenu();

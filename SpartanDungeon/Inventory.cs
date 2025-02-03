@@ -10,10 +10,13 @@ namespace SpartanDungeon
     {
         public List<Item> inventory { get; private set; } = new List<Item>();
         
-        private Dictionary<int, Item> equippedItems = new Dictionary<int, Item>();    // 장착된 아이템 저장
+        public Dictionary<int, Item> equippedItems = new Dictionary<int, Item>();    // 장착된 아이템 저장
 
-
-
+        private Player player;
+        public Inventory(Player player)
+        {
+            this.player = player;
+        }
         public void AddItem(int itemId)
         {
             Item item = GameData.GetItemById(itemId);   // 아이디로 아이템 찾아야됨
@@ -28,7 +31,7 @@ namespace SpartanDungeon
         public void ShowInventory()
         {
             Console.WriteLine("\n[인벤토리]");
-            if (inventory.Count == 0)
+            if (inventory == null || inventory.Count == 0)
             {
                 Console.WriteLine("현재 아이템이 없습니다.");
             }
@@ -36,7 +39,8 @@ namespace SpartanDungeon
             {
                 foreach (var item in inventory)
                 {
-                    string equippedMark = equippedItems.ContainsValue(item) ? "[E]" : ""; // 장착된 아이템 표시
+                    string equippedMark = equippedItems != null && item != null && 
+                                            equippedItems.ContainsValue(item) ? "[E]" : ""; // 장착된 아이템 표시
                     Console.WriteLine($"- {item.name} {equippedMark} ({(item.isEquipment ? "장비" : "소모품")})"); //장비 또는 소모품 표시
 
                 }
@@ -92,28 +96,14 @@ namespace SpartanDungeon
 
 
         // 아이템 장착/해제 기능
-        public bool ToggleEquipItem(int itemIndex)
+        public bool ToggleEquipItem(int invenIndex)
         {
-            if (itemIndex < 1 || itemIndex > inventory.Count) return false; // 인벤 인덱스는 1부터 시작함
+            if (invenIndex < 1 || invenIndex > inventory.Count) return false; // 인벤 인덱스는 1부터 시작함
 
-            Item itemToEquip = inventory[itemIndex - 1]; // 근데 인벤은 0부터 있음
+            Item itemToEquip = inventory[invenIndex - 1]; // 근데 인벤은 0부터 있음
             if (!itemToEquip.isEquipment) return false; // 장비가 아니면x
 
-            int equipmentId = itemToEquip.id; 
-
-            if (equippedItems.ContainsKey(equipmentId))
-            {
-                // 이미 장착 중이면 해제
-                Console.WriteLine($"{equippedItems[equipmentId].name}을(를) 장착 해제했습니다.");
-                equippedItems.Remove(equipmentId);
-            }
-            else
-            {
-                // 장착 실행
-                equippedItems[equipmentId] = itemToEquip;
-                Console.WriteLine($"{itemToEquip.name}을(를) 장착했습니다!");
-            }
-
+            player.ToggleEquipItem(itemToEquip);    // 플레이어에 장착
             return true;
         }
 
