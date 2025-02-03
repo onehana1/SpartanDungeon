@@ -10,12 +10,18 @@ namespace SpartanDungeon
     {
         public List<Item> inventory { get; private set; } = new List<Item>();
         
-        private Dictionary<Equipments, Item> equippedItems = new Dictionary<Equipments, Item>();    // 장착된 아이템 저장
+        private Dictionary<int, Item> equippedItems = new Dictionary<int, Item>();    // 장착된 아이템 저장
 
 
 
-        public void AddItem(Item item)
+        public void AddItem(int itemId)
         {
+            Item item = GameData.GetItemById(itemId);   // 아이디로 아이템 찾아야됨
+            if (item == null)
+            {
+                Console.WriteLine("아이템 이상한데요");
+                return;
+            }
             inventory.Add(item);
             Console.WriteLine($"{item.name}을(를) 획득했습니다!");
         }
@@ -46,19 +52,44 @@ namespace SpartanDungeon
             }
             else
             {
+
                 int index = 1;
+
                 foreach (var item in inventory)
                 {
-                    string equippedMark = equippedItems.ContainsValue(item) ? "[E]" : ""; // 장착된 아이템 표시
-                    string itemInfo = item.isEquipment
-                         ? $"| {(item.offensive > 0 ? $"공격력 +{item.offensive}" : $"방어력 +{item.defensive}")} | {item.description}"
-                         : $"| {item.description}";     // 장비 아니면 설명만
+                    string equippedMark = equippedItems.ContainsValue(item) ? "[E] " : ""; 
+                    string stats = $"{(item.offensive > 0 ? $"공격력 +{item.offensive} " : "")}" +
+                        $"{(item.defensive > 0 ? $"방어력 +{item.defensive}" : "")}";
 
-                    Console.WriteLine($"- {index} {equippedMark}{item.name} {itemInfo}");
+                    Console.WriteLine(
+                           $"{LetterSpacing(index.ToString(), 5)} " +
+                           $"{LetterSpacing(equippedMark + item.name, 20)} | " +
+                           $"{LetterSpacing(stats, 25)} | " +
+                           $"{item.description}"
+                       );
                     index++;
                 }
+
             }
         }
+
+        public static string LetterSpacing(string text, int width)
+        {
+            int textWidth = 0;
+
+            foreach (char c in text)
+            {
+                if (char.IsWhiteSpace(c))   //공백 체크
+                    textWidth += 1; 
+                else if (c > 255)
+                    textWidth += 2;  // 255 이상은 한글 -> 2칸
+                else
+                    textWidth += 1;  // 나머지 1칸
+            }
+
+            return text + new string(' ', width - textWidth);
+        }
+
 
         // 아이템 장착/해제 기능
         public bool ToggleEquipItem(int itemIndex)
@@ -68,23 +99,24 @@ namespace SpartanDungeon
             Item itemToEquip = inventory[itemIndex - 1]; // 근데 인벤은 0부터 있음
             if (!itemToEquip.isEquipment) return false; // 장비가 아니면x
 
-            Equipments equipmentType = (Equipments)itemToEquip.id; // 아이템 id (부위) -> Equipments (부위)
+            int equipmentId = itemToEquip.id; 
 
-            if (equippedItems.ContainsKey(equipmentType))
+            if (equippedItems.ContainsKey(equipmentId))
             {
                 // 이미 장착 중이면 해제
-                Console.WriteLine($"{equippedItems[equipmentType].name}을(를) 장착 해제했습니다.");
-                equippedItems.Remove(equipmentType);
+                Console.WriteLine($"{equippedItems[equipmentId].name}을(를) 장착 해제했습니다.");
+                equippedItems.Remove(equipmentId);
             }
             else
             {
                 // 장착 실행
-                equippedItems[equipmentType] = itemToEquip;
+                equippedItems[equipmentId] = itemToEquip;
                 Console.WriteLine($"{itemToEquip.name}을(를) 장착했습니다!");
             }
 
             return true;
         }
+
 
 
         public void UseItem(int itemId)

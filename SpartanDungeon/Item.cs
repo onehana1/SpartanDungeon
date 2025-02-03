@@ -9,6 +9,8 @@ namespace SpartanDungeon
     public class Item
     {
         public int id { get; private set; }
+
+        public int part { get; private set; }
         public string name { get; private set; }
         public bool isEquipment { get; private set; }
 
@@ -17,9 +19,10 @@ namespace SpartanDungeon
 
         public string description { get; private set; }
 
-        public Item(int id, string name, bool isEquipment)
+        public Item(int id, int part, string name, bool isEquipment, int offensive,int defensive, string description)
         {
-            this.id = id;   //일단 부위
+            this.id = id;
+            this.part = part;
             this.name = name;
             this.isEquipment = isEquipment;
             this.offensive = offensive;

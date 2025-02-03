@@ -13,6 +13,10 @@ namespace SpartanDungeon
         public string name { get; set; }
         public Job job { get; set; }
         public int level { get; set; } = 1;
+
+        public int baseOffensive { get; private set; } = 10; 
+        public int baseDefensive { get; private set; } = 10;  
+
         public int offensive { get; set; } = 0;
         public int defensive { get; set; } = 0;
 
@@ -21,7 +25,9 @@ namespace SpartanDungeon
 
         public int gold { get; set; } = 0;
 
-        public Inventory inventory { get; private set; } = new Inventory(); 
+        public Inventory inventory { get; private set; } = new Inventory();
+        public Dictionary<EquipmentType, Item> equippedItems = new Dictionary<EquipmentType, Item>(); // 장착된 아이템 저장
+
 
         public Player()
         {
@@ -61,6 +67,8 @@ namespace SpartanDungeon
                 }
             }
         }
+
+
 
     }
 }
