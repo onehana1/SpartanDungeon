@@ -66,10 +66,10 @@ namespace SpartanDungeon
                         $"{(item.defensive > 0 ? $"방어력 +{item.defensive}" : "")}";
 
                     Console.WriteLine(
-                           $"{LetterSpacing(index.ToString(), 5)} " +
-                           $"{LetterSpacing(equippedMark + item.name, 20)} | " +
-                           $" {LetterSpacing(stats, 20)} | " +
-                           $" {LetterSpacing(item.description, 40)} |" +
+                           $"{Utill.LetterSpacing(index.ToString(), 5)} " +
+                           $"{Utill.LetterSpacing(equippedMark + item.name, 20)} | " +
+                           $" {Utill.LetterSpacing(stats, 20)} | " +
+                           $" {Utill.LetterSpacing(item.description, 40)} |" +
                            $" {item.price} G"
                        );
                     index++;
@@ -78,22 +78,7 @@ namespace SpartanDungeon
             }
         }
 
-        public static string LetterSpacing(string text, int width)
-        {
-            int textWidth = 0;
 
-            foreach (char c in text)
-            {
-                if (char.IsWhiteSpace(c))   //공백 체크
-                    textWidth += 1; 
-                else if (c > 255)
-                    textWidth += 2;  // 255 이상은 한글 -> 2칸
-                else
-                    textWidth += 1;  // 나머지 1칸
-            }
-
-            return text + new string(' ', Math.Max(0, width - textWidth));
-        }
 
 
         // 아이템 장착/해제 기능

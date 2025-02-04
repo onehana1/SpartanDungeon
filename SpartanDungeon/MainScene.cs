@@ -12,7 +12,8 @@ namespace SpartanDungeon
             var player = new Player();
             var store = new Store(player);
             var rest = new Rest(player);
-            var menu = new MainMenu(player, store, rest);
+            var dungeon = new Dungeon(player);
+            var menu = new MainMenu(player, store, rest, dungeon);
 
  
 

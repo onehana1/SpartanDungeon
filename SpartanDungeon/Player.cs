@@ -15,10 +15,13 @@ namespace SpartanDungeon
         public int level { get; set; } = 1;
 
         public int baseOffensive { get; private set; } = 10; 
-        public int baseDefensive { get; private set; } = 10;  
+        public int baseDefensive { get; private set; } = 10;
 
-        public int plusOffensive { get; set; } = 0;
-        public int plusDefensive { get; set; } = 0;
+        public int plusOffensive { get; private set; }
+        public int plusDefensive { get; private set; }
+        public int curOffensive { get; set; } = 0;
+        public int curDefensive { get; set; } = 0;
+
 
         public int maxHp { get; set; } = 100;
         public int curHp { get; set; }
@@ -110,8 +113,11 @@ namespace SpartanDungeon
                 plusDefensive += item.defensive;
             }
 
-            Console.WriteLine($"[스탯 업데이트] 공격력: {baseOffensive + plusOffensive} (+{plusOffensive}), " +
-                $"방어력: {baseDefensive + plusDefensive} (+{plusDefensive})");
+            curDefensive = baseDefensive + plusDefensive;
+            curOffensive = baseOffensive + plusOffensive;
+
+            Console.WriteLine($"[스탯 업데이트] 공격력: {curOffensive} (+{plusOffensive}), " +
+                $"방어력: {curDefensive} (+{plusDefensive})");
         }
 
 

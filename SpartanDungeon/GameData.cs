@@ -19,6 +19,7 @@ namespace SpartanDungeon
         Inventory,
         Shop,
         Rest,
+        Dungeon,
         LeaveGame
     }
 
@@ -40,9 +41,15 @@ namespace SpartanDungeon
     {
         ExitMenu = 0,
         PlayerRest,
+    }
 
-        MaxHeal = 100,
-        RestGold = 500
+
+    public enum DungeonMenuOption
+    {
+        ExitMenu = 0,
+        EasyDungeon,
+        NormalDungeon,
+        HardDungeon,
 
     }
 
@@ -87,7 +94,7 @@ namespace SpartanDungeon
 
     public static class GameData
     {
-
+        // 직업
         public static readonly Dictionary<Job, string> JobDescriptions = new Dictionary<Job, string>
         {
             { Job.Warrior, "전사" },
@@ -95,18 +102,19 @@ namespace SpartanDungeon
             { Job.Magician, "마법사" }
         };
 
-
+        // 메뉴
         public static readonly Dictionary<MenuOption, string> MenuDescriptions = new Dictionary<MenuOption, string>
         {
             { MenuOption.Status, "상태 보기" },
             { MenuOption.Inventory, "인벤토리" },
             { MenuOption.Shop, "상점" },
             { MenuOption.Rest, "휴식하기" },
+            { MenuOption.Dungeon, "던전 입장" },
 
             { MenuOption.LeaveGame, "게임 종료" }
         };
 
-
+        // 아이템
         public static readonly List<Item> Items = new List<Item>
         { 
             // 장비 아이템
@@ -151,5 +159,23 @@ namespace SpartanDungeon
         {
             return Items.Find(item => item.id == id);
         }
+
+        // 휴식
+        public const int RestHealAmount = 100;
+        public const int RestGoldCost = 500;
+
+
+        // 던전
+        public static readonly List<DungeonInfo> dungeons = new List<DungeonInfo>
+        {
+            new DungeonInfo((int)DungeonMenuOption.EasyDungeon, "쉬운 던전", 5,5,10, 1000),
+            new DungeonInfo((int)DungeonMenuOption.NormalDungeon,"일반 던전", 11,11,20, 1700),
+            new DungeonInfo((int) DungeonMenuOption.HardDungeon, "어려운 던전", 17,17,30, 2500)
+        };
+        public static DungeonInfo GetDungeonById(int id)
+        {
+            return dungeons.FirstOrDefault(dun => dun._id == id);
+        }
+
     }
 }

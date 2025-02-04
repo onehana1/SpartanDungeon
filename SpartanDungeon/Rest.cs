@@ -53,7 +53,7 @@ namespace SpartanDungeon
 
         public void PlayerRest()
         {
-            if (player.gold < (int)RestMenuOption.RestGold)
+            if (player.gold < GameData.RestGoldCost)
             {
                 Console.WriteLine($"보유 골드 : {player.gold} G");
                 Console.WriteLine($"골드가 부족합니다.");
@@ -65,8 +65,8 @@ namespace SpartanDungeon
                 return;
             }
 
-            player.gold -= (int)RestMenuOption.RestGold;
-            player.curHp = Math.Min(player.curHp + (int)RestMenuOption.MaxHeal, player.maxHp);
+            player.gold -= GameData.RestGoldCost;
+            player.curHp = Math.Min(player.curHp + GameData.RestHealAmount, player.maxHp);
             Console.WriteLine($"휴식을 완료했습니다. 현재 체력: {player.curHp}");
 
             Console.WriteLine($"보유 골드 : {player.gold} G");

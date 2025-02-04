@@ -12,11 +12,13 @@ namespace SpartanDungeon
         private Player player;
         private Store store;
         private Rest rest;
-        public MainMenu(Player player, Store store, Rest rest)
+        private Dungeon dungeon;
+        public MainMenu(Player player, Store store, Rest rest, Dungeon dungeon)
         {
             this.player = player;
             this.store = store;
             this.rest = rest;   
+            this.dungeon = dungeon;
         }
 
 
@@ -41,7 +43,7 @@ namespace SpartanDungeon
                     {
                         case MenuOption.Status:
                            // Console.Clear();
-                            //ShowStatus();
+                            ShowStatus();
                             break;
                         case MenuOption.Inventory:
                             //Console.Clear();
@@ -52,14 +54,17 @@ namespace SpartanDungeon
                             ShowStore();
                             break;
                         case MenuOption.Rest:
-                            Rest();
+                            ShowRest();
+                            break;
+                        case MenuOption.Dungeon:
+                            ShowDungeon();
                             break;
                         case MenuOption.LeaveGame:
                            // Console.Clear();
                             Console.WriteLine("게임을 종료합니다.\n안녕!");
                             return;
                         default:
-                           // Console.WriteLine("잘못된 입력입니다. 다시 선택하세요.");
+                            Console.WriteLine("잘못된 입력입니다. 다시 선택하세요.");
                             break;
                     }
                 }
@@ -150,9 +155,14 @@ namespace SpartanDungeon
             // CloseMenu();
         }
 
-        private void Rest()
+        private void ShowRest()
         {
            rest.ShowRestMenu();
+        }
+
+        private void ShowDungeon()
+        {
+            dungeon.ShowDungeonMenu();
         }
     }
 }
