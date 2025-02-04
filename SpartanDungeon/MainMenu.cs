@@ -11,10 +11,12 @@ namespace SpartanDungeon
     {
         private Player player;
         private Store store;
-        public MainMenu(Player player, Store store)
+        private Rest rest;
+        public MainMenu(Player player, Store store, Rest rest)
         {
             this.player = player;
             this.store = store;
+            this.rest = rest;   
         }
 
 
@@ -48,6 +50,9 @@ namespace SpartanDungeon
                         case MenuOption.Shop:
                            // Console.Clear();
                             ShowStore();
+                            break;
+                        case MenuOption.Rest:
+                            Rest();
                             break;
                         case MenuOption.LeaveGame:
                            // Console.Clear();
@@ -139,11 +144,15 @@ namespace SpartanDungeon
             }
         }
 
-
         private void ShowStore()
         {
             store.ShowStoreMenu();
             // CloseMenu();
+        }
+
+        private void Rest()
+        {
+           rest.ShowRestMenu();
         }
     }
 }

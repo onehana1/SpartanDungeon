@@ -18,6 +18,7 @@ namespace SpartanDungeon
         Status = 1,
         Inventory,
         Shop,
+        Rest,
         LeaveGame
     }
 
@@ -32,6 +33,16 @@ namespace SpartanDungeon
         ExitMenu = 0,
         BuyMenu,
         SellMenu,
+
+    }
+
+    public enum RestMenuOption
+    {
+        ExitMenu = 0,
+        PlayerRest,
+
+        MaxHeal = 100,
+        RestGold = 500
 
     }
 
@@ -90,6 +101,8 @@ namespace SpartanDungeon
             { MenuOption.Status, "상태 보기" },
             { MenuOption.Inventory, "인벤토리" },
             { MenuOption.Shop, "상점" },
+            { MenuOption.Rest, "휴식하기" },
+
             { MenuOption.LeaveGame, "게임 종료" }
         };
 
