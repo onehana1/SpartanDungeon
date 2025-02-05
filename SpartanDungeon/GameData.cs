@@ -20,6 +20,7 @@ namespace SpartanDungeon
         Shop,
         Rest,
         Dungeon,
+        SaveGame,
         LeaveGame
     }
     public enum StartMenuOption
@@ -117,6 +118,8 @@ namespace SpartanDungeon
             { MenuOption.Shop, "상점" },
             { MenuOption.Rest, "휴식하기" },
             { MenuOption.Dungeon, "던전 입장" },
+            { MenuOption.SaveGame, "저장하기" },
+
             { MenuOption.LeaveGame, "게임 종료" }
         };
 

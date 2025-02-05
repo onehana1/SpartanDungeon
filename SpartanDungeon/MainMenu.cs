@@ -42,7 +42,7 @@ namespace SpartanDungeon
                     switch (choice)
                     {
                         case MenuOption.Status:
-                           // Console.Clear();
+                           //Console.Clear();
                             ShowStatus();
                             break;
                         case MenuOption.Inventory:
@@ -58,6 +58,10 @@ namespace SpartanDungeon
                             break;
                         case MenuOption.Dungeon:
                             ShowDungeon();
+                            break;
+                        case MenuOption.SaveGame:
+                            SaveLoadManager.SavePlayerData(player);
+                            Console.WriteLine("지금까지의 데이터를 저장합니다.");
                             break;
                         case MenuOption.LeaveGame:
                             // Console.Clear();

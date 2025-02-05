@@ -106,7 +106,7 @@ namespace SpartanDungeon
             Console.WriteLine($"{dungeon._name} 클리어에 성공하셨습니다!\n");
 
             // 체력
-            int defGap = player.curDefensive - dungeon.rDef;    // 내 방어력 던전 방어력 갭
+            int defGap = (int)player.curDefensive - dungeon.rDef;    // 내 방어력 던전 방어력 갭
             int reduceHpAmount = random.Next(dungeon.reduceHp + defGap, dungeon.reduceHp + 16 + defGap); // 체력 감소량
 
             Console.Write($"체력: {player.curHp} -> ");
@@ -119,12 +119,18 @@ namespace SpartanDungeon
             // 보상
             int rewardGold = dungeon.RewardGold;
             int plusGoldPercent;
-            plusGoldPercent = random.Next(player.curOffensive, player.curOffensive * 2);
+            plusGoldPercent = random.Next((int)player.curOffensive, (int)player.curOffensive * 2);
             rewardGold += rewardGold * (plusGoldPercent/100);
 
             Console.Write($"보유 골드: {player.gold} G -> ");
             player.gold += rewardGold;
             Console.WriteLine($"{player.gold} G");
+
+            player.clearDungeonCount++;  // 클리어 횟수 증가
+            if (player.clearDungeonCount >= player.level)
+            {
+                player.LevelUp();
+            }
 
         }
     }

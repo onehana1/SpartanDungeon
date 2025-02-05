@@ -13,14 +13,15 @@ namespace SpartanDungeon
         public string name { get; set; }
         public Job job { get; set; }
         public int level { get; set; } = 1;
+        public int clearDungeonCount { get; set; } = 0;
 
-        public int baseOffensive { get; set; } = 10; 
-        public int baseDefensive { get; set; } = 10;
+        public float baseOffensive { get; set; } = 10; 
+        public float baseDefensive { get; set; } = 10;
 
-        public int plusOffensive { get; set; }
-        public int plusDefensive { get; set; }
-        public int curOffensive { get; set; } = 0;
-        public int curDefensive { get; set; } = 0;
+        public float plusOffensive { get; set; }
+        public float plusDefensive { get; set; }
+        public float curOffensive { get; set; } = 0;
+        public float curDefensive { get; set; } = 0;
 
 
         public int maxHp { get; set; } = 100;
@@ -39,11 +40,12 @@ namespace SpartanDungeon
 
 
         [JsonConstructor]
-        public Player(string name, Job job, int level, int baseOffensive, int baseDefensive, int plusOffensive, int plusDefensive, int curOffensive, int curDefensive, int maxHp, int curHp, int gold, Inventory inventory) // JSON에서 불러올 때 실행되는 생성자...
+        public Player(string name, Job job, int level, int clearDungeonCount, float baseOffensive, float baseDefensive, float plusOffensive, float plusDefensive, float curOffensive, float curDefensive, int maxHp, int curHp, int gold, Inventory inventory) // JSON에서 불러올 때 실행되는 생성자...
         {    
             this.name = name;
             this.job = job;
             this.level = level;
+            this.clearDungeonCount = clearDungeonCount;
             this.baseOffensive = baseOffensive;
             this.baseDefensive = baseDefensive;
             this.plusOffensive = plusOffensive;
@@ -110,6 +112,19 @@ namespace SpartanDungeon
 
             Console.WriteLine($"[스탯 업데이트] 공격력: {curOffensive} (+{plusOffensive}), " +
                 $"방어력: {curDefensive} (+{plusDefensive})");
+        }
+
+        public void LevelUp()
+        {
+            clearDungeonCount = 0; // 클리어 횟수 초기화
+            level++;  // 레벨 증가
+            baseOffensive += 0.5f;
+            baseDefensive += 1;
+
+            Console.WriteLine($"\n레벨 업! Lv{level} 가 되었습니다!");
+            Console.WriteLine($"기본 공격력: {baseOffensive} (+0.5), 방어력: {baseDefensive} (+1)");
+
+            UpdateStats();
         }
 
 
