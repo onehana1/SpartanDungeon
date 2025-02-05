@@ -60,8 +60,9 @@ namespace SpartanDungeon
                             ShowDungeon();
                             break;
                         case MenuOption.LeaveGame:
-                           // Console.Clear();
-                            Console.WriteLine("게임을 종료합니다.\n안녕!");
+                            // Console.Clear();
+                            SaveLoadManager.SavePlayerData(player);
+                            Console.WriteLine("지금까지의 데이터를 저장합니다.\n게임을 종료합니다.\n안녕!");
                             return;
                         default:
                             Console.WriteLine("잘못된 입력입니다. 다시 선택하세요.");

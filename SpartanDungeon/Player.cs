@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SpartanDungeon
 {
-
     public class Player
     {
         public string name { get; set; }
         public Job job { get; set; }
         public int level { get; set; } = 1;
 
-        public int baseOffensive { get; private set; } = 10; 
-        public int baseDefensive { get; private set; } = 10;
+        public int baseOffensive { get; set; } = 10; 
+        public int baseDefensive { get; set; } = 10;
 
-        public int plusOffensive { get; private set; }
-        public int plusDefensive { get; private set; }
+        public int plusOffensive { get; set; }
+        public int plusDefensive { get; set; }
         public int curOffensive { get; set; } = 0;
         public int curDefensive { get; set; } = 0;
 
@@ -28,7 +28,7 @@ namespace SpartanDungeon
 
         public int gold { get; set; } = 10000;
 
-        public Inventory inventory { get; private set; }
+        public Inventory inventory { get; set; }
 
 
         public Player()
@@ -37,7 +37,29 @@ namespace SpartanDungeon
             inventory = new Inventory(this);
         }
 
-       
+
+        [JsonConstructor]
+        public Player(string name, Job job, int level, int baseOffensive, int baseDefensive, int plusOffensive, int plusDefensive, int curOffensive, int curDefensive, int maxHp, int curHp, int gold, Inventory inventory) // JSON에서 불러올 때 실행되는 생성자...
+        {    
+            this.name = name;
+            this.job = job;
+            this.level = level;
+            this.baseOffensive = baseOffensive;
+            this.baseDefensive = baseDefensive;
+            this.plusOffensive = plusOffensive;
+            this.plusDefensive = plusDefensive;
+            this.curOffensive = curOffensive;
+            this.curDefensive = curDefensive;
+            this.maxHp = maxHp;
+            this.curHp = curHp;
+            this.gold = gold;
+            this.inventory = inventory ?? new Inventory(this);  // null이면 새 인벤토리 생성
+
+            if (inventory != null)
+            {
+                inventory.SetPlayer(this);  // 역직렬화 후 player 연결
+            }
+        }
 
         public void SetPlayerName()
         {
@@ -71,44 +93,14 @@ namespace SpartanDungeon
             }
         }
 
-        public void ToggleEquipItem(Item item)
-        {
-            if (!item.isEquipment) return; // 장비가 아니면 무시
 
-            int equipmentId = item.id;
-            int equipmentPart = item.part;
-
-            // 같은 아이템을 다시 선택하면 해제
-            if (inventory.equippedItems.ContainsKey(equipmentPart) && inventory.equippedItems[equipmentPart] == item)
-            {
-                Console.WriteLine($"{inventory.equippedItems[equipmentPart].name}을(를) 장착 해제했습니다.");
-                inventory.equippedItems.Remove(equipmentPart);
-            }
-            else
-            {
-                // 기존 장비 해제 후 새로운 장비 장착
-                if (inventory.equippedItems.ContainsKey(equipmentPart))
-                {
-                    Console.WriteLine($"{inventory.equippedItems[equipmentPart].name}을(를) 해제하고 {item.name}을(를) 장착했습니다.");
-                    inventory.equippedItems.Remove(equipmentPart);
-                }
-                else
-                {
-                    Console.WriteLine($"{item.name}을(를) 장착했습니다");
-                }
-
-                inventory.equippedItems[equipmentPart] = item; // 장비 장착
-            }
-
-            UpdateStats(); // 스탯 업데이트
-        }
-
-        private void UpdateStats()
+        public void UpdateStats()
         {
             plusOffensive = 0;
             plusDefensive = 0;
-            foreach (var item in inventory.equippedItems.Values)
+            foreach (var itemId in inventory.equippedItems.Values)
             {
+                Item item = GameData.GetItemById(itemId);
                 plusOffensive += item.offensive;
                 plusDefensive += item.defensive;
             }

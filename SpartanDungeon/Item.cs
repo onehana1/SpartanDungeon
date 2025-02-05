@@ -8,20 +8,20 @@ namespace SpartanDungeon
 {
     public class Item
     {
-        public int id { get; private set; }
+        public int id { get;  set; }
 
-        public int part { get; private set; }
-        public string name { get; private set; }
-        public bool isEquipment { get; private set; }
+        public string part { get;  set; }
+        public string name { get;  set; }
+        public bool isEquipment { get;  set; }
 
         public int offensive { get; set; } = 0;
         public int defensive { get; set; } = 0;
 
-        public string description { get; private set; }
+        public string description { get;  set; }
 
-        public int price {  get; private set; }
+        public int price {  get;  set; }
 
-        public Item(int id, int part, string name, bool isEquipment, int offensive,int defensive, string description, int price)
+        public Item(int id, string part, string name, bool isEquipment, int offensive,int defensive, string description, int price)
         {
             this.id = id;
             this.part = part;

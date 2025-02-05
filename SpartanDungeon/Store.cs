@@ -137,7 +137,7 @@ namespace SpartanDungeon
                 Item selectedItem = player.inventory.inventory[input - 1]; 
 
                 // 장착 중인지 확인
-                if (player.inventory.equippedItems.ContainsValue(selectedItem))
+                if (player.inventory.equippedItems.Values.Contains(selectedItem.id))
                 {
                     Console.WriteLine("장착 중인 아이템은 판매할 수 없습니다.");
                     return;
