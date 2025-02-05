@@ -26,7 +26,7 @@ namespace SpartanDungeon
         {
             while (true)
             {
-                //Console.Clear();
+                Console.Clear();
                 foreach (MenuOption option in Enum.GetValues(typeof(MenuOption)))
                 {
                     if (option == MenuOption.ExitMenu) continue;    // exitmenu 는 보여줄 필요없고 dic에도 안넣을거임
@@ -42,29 +42,35 @@ namespace SpartanDungeon
                     switch (choice)
                     {
                         case MenuOption.Status:
-                           //Console.Clear();
+                           Console.Clear();
                             ShowStatus();
                             break;
                         case MenuOption.Inventory:
-                            //Console.Clear();
+                            Console.Clear();
                             ShowInventoryMenu();
                             break;
                         case MenuOption.Shop:
-                           // Console.Clear();
+                            Console.Clear();
                             ShowStore();
                             break;
                         case MenuOption.Rest:
+                            Console.Clear();
                             ShowRest();
                             break;
                         case MenuOption.Dungeon:
+                            Console.Clear();
                             ShowDungeon();
                             break;
                         case MenuOption.SaveGame:
+                            Console.Clear();
                             SaveLoadManager.SavePlayerData(player);
                             Console.WriteLine("지금까지의 데이터를 저장합니다.");
+                            Console.WriteLine("계속해서 게임을 진행하고 싶다면 아무키나 입력해주세요.");
+
+                            Console.ReadKey();
                             break;
                         case MenuOption.LeaveGame:
-                            // Console.Clear();
+                            Console.Clear();
                             SaveLoadManager.SavePlayerData(player);
                             Console.WriteLine("지금까지의 데이터를 저장합니다.\n게임을 종료합니다.\n안녕!");
                             return;

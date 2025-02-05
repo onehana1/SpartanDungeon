@@ -21,6 +21,7 @@ namespace SpartanDungeon
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("\n[상점]");
                 ShowItems();
                 Console.WriteLine($"\n[보유골드]\n{player.gold}\n");

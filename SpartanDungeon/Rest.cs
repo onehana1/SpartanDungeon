@@ -34,6 +34,7 @@ namespace SpartanDungeon
                     switch (choice)
                     {
                         case RestMenuOption.PlayerRest:
+                            Console.Clear();
                             PlayerRest();
                             break;
 
@@ -61,13 +62,13 @@ namespace SpartanDungeon
             }
             else if (player.curHp == player.maxHp)
             {
-                Console.WriteLine($"더이상 회복할 수 없습니다. 이미 최대 체력입니다.");
+                Console.WriteLine($"\n더이상 회복할 수 없습니다. 이미 최대 체력입니다.");
                 return;
             }
 
             player.gold -= GameData.RestGoldCost;
             player.curHp = Math.Min(player.curHp + GameData.RestHealAmount, player.maxHp);
-            Console.WriteLine($"휴식을 완료했습니다. 현재 체력: {player.curHp}");
+            Console.WriteLine($"\n휴식을 완료했습니다. 현재 체력: {player.curHp}");
 
             Console.WriteLine($"보유 골드 : {player.gold} G");
 

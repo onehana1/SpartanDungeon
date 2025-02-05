@@ -76,7 +76,10 @@ namespace SpartanDungeon
 
         private void GoDungeon(DungeonInfo dungeon)
         {
-            Console.WriteLine($"\n[{dungeon._name}]에 입장합니다.\n");
+            Console.WriteLine($"\n[{dungeon._name}]에 입장합니다...\n");
+            Console.WriteLine("결과를 보기 위해 아무키나 입력해주세요");
+            Console.ReadKey();
+            Console.Clear();
             if (player.curDefensive < dungeon.rDef)
             {
                 if (random.Next(0, 100) < 40)
